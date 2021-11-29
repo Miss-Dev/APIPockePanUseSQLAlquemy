@@ -20,19 +20,31 @@ class Ponto(Resource):
     def post(self):
         try:
             dados = request.json
-            ponto = Pontos(latitude=dados['latitude'], longitude=dados['longitude'])
-            ponto.save()
-            response = {
-                'message': 'Ponto cadastrado no mapa',
-                'codigo_ponto': ponto.codigo_ponto,
-                'latitude': ponto.latitude,
-                'longitude': ponto.longitude
-            }
+            if self.verificaPonto(dados):
+                ponto = Pontos(latitude=dados['latitude'], longitude=dados['longitude'])
+                ponto.save()
+                response = {
+                    'message': 'Ponto cadastrado no mapa',
+                    'codigo_ponto': ponto.codigo_ponto,
+                    'latitude': ponto.latitude,
+                    'longitude': ponto.longitude
+                }
+            else:
+                response = {
+                    'message': 'Ponto inválido'
+                }
         except:
             response = {
                            "message": "Erro ao cadastrar ponto"
                        }, 500
         return response
+
+    def verificaPonto(self, dados):
+        p1 = 0 <= abs(dados['latitude']) <= 90
+        p2 = 0 <= abs(dados['longitude']) <= 180
+        if p1 and p2:
+            return True
+        return False
 
     @auth.login_required
     def get(self):
