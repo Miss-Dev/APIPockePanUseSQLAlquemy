@@ -16,7 +16,7 @@ def verificacao(login, senha):
 
 
 class Ponto(Resource):
-    @auth.verify_password()
+    @auth.login_required
     def post(self):
         try:
             dados = request.json
@@ -34,7 +34,7 @@ class Ponto(Resource):
                        }, 500
         return response
 
-    @auth.verify_password()
+    @auth.login_required
     def get(self):
         pontos = Pontos.query.all()
         return {
@@ -43,7 +43,7 @@ class Ponto(Resource):
 
 
 class Charada(Resource):
-    @auth.verify_password()
+    @auth.login_required
     def post(self):
         try:
             dados = request.json
@@ -60,7 +60,7 @@ class Charada(Resource):
                        }, 500
         return response
 
-    @auth.verify_password()
+    @auth.login_required
     def get(self):
         charada = Charadas.query.all()
         return {
@@ -69,7 +69,7 @@ class Charada(Resource):
 
 
 class PontuaJogadores(Resource):
-
+    @auth.login_required
     def post(self):
         try:
             dados = request.json
@@ -82,13 +82,14 @@ class PontuaJogadores(Resource):
             }
         except:
             response = {
-                           'message': 'Erro ao cadastrar charada'
+                           'message': 'Erro ao cadastrar pontuacao'
                        }, 500
         return response
 
 
 api.add_resource(Ponto, '/pontos/')
 api.add_resource(Charada, '/charadas/')
+api.add_resource(PontuaJogadores, '/pontuacao/')
 
 if __name__ == '__main__':
     app.run(debug=True)
