@@ -49,9 +49,11 @@ class Ponto(Resource):
     @auth.login_required
     def get(self):
         pontos = Pontos.query.all()
-        return {
-            'pontos_cadastrados': pontos
-        }
+        return [{
+            'latitude': pontos[i].latitude,
+            'longitude': pontos[i].longitude
+
+        }for i in range(len(pontos))]
 
 
 class Charada(Resource):
@@ -75,9 +77,10 @@ class Charada(Resource):
     @auth.login_required
     def get(self):
         charada = Charadas.query.all()
-        return {
-            'charadas_cadastradas': charada
-        }
+        return [{
+            "charada": charada[i].descricao,
+            "id_charada": charada[i].id_charada
+        }for i in range(len(charada))]
 
 
 class PontuaJogadores(Resource):
