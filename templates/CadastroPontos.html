@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_cadastro.css') }}"/>
+    <title>Cadastro</title>
+</head>
+<body>
+    <div class="logo">
+
+        <!-- <p>Me lembra!</p> -->
+      </div>
+    <div class="entrar">
+
+        <form method="POST">
+          <!-- <div class="labels"> -->
+            <p class="texto-destaque">Pocke Pan - Cadastrar Ponto</p>
+
+            {{ form.csrf_token }}
+
+            {{ form.latitude.label(class='labels') }}
+            {{ form.latitude(class='input') }}
+
+
+
+
+            {{ form.longitude.label(class='labels') }}
+            {{ form.longitude(class='input') }}
+
+
+
+            {% for message in get_flashed_messages() %}
+              <div class="alert-error">Saída: {{ message }}</div>
+            {% endfor %}
+
+          <div class="labels">
+            <button class="button-entrar" type="submit">Enviar</button>
+          </div>
+        </form>
+
+
+      </div>
+
+
+</body>
+</html>
